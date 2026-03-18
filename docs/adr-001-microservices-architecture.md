@@ -1,0 +1,41 @@
+# ADR 001: Use Microservices Architecture
+
+## Status
+**Accepted** - 2026-03-18
+
+## Context
+We need to build a scalable insurance management platform that handles vehicle registration, policy management, payments, and document processing. The system must support multiple client applications (mobile, web) and integrate with external services (banks, payment processors, OCR providers).
+
+## Decision
+We will use a **microservices architecture** with the following services:
+- **Vehicles Service** - Vehicle registry and verification
+- **Policies Service** - Policy issuance and management
+- **Payments Service** - Payment processing (SPEI, OXXO Pay)
+- **Documents Service** - Document management with OCR
+
+## Consequences
+
+### Positive
+- **Independent scaling** - Each service can scale based on its load
+- **Technology flexibility** - Services can use different technologies
+- **Fault isolation** - Failures in one service don't cascade
+- **Team autonomy** - Teams can own services independently
+- **Deployment flexibility** - Services can be deployed independently
+
+### Negative
+- **Complexity** - More complex than monolithic architecture
+- **Data consistency** - Distributed transactions are harder
+- **Network latency** - Inter-service communication adds latency
+- **Operational overhead** - More services to monitor and maintain
+- **Testing complexity** - Integration testing across services
+
+## Alternatives Considered
+1. **Monolithic Architecture** - Rejected due to scalability concerns
+2. **Serverless** - Rejected due to latency requirements for payment processing
+3. **Service Mesh** - Deferred for future consideration
+
+## Implementation Notes
+- Use API Gateway for centralized routing
+- Implement circuit breakers for external integrations
+- Use message queues for async communication
+- Consider eventual consistency for cross-service operations
