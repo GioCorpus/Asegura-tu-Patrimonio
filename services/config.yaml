@@ -1,0 +1,49 @@
+app:
+  name: "permisos-vehiculares"
+  version: "1.0.0"
+  port: 3004
+  env: "development"
+  apiPrefix: "/api/v1"
+
+database:
+  host: "${DB_HOST:localhost}"
+  port: 5432
+  username: "${DB_USER:postgres}"
+  password: "${DB_PASSWORD:postgres}"
+  name: "${DB_NAME:asegura_permisos}"
+  pool:
+    min: 2
+    max: 10
+    idleTimeoutMillis: 30000
+
+redis:
+  host: "${REDIS_HOST:localhost}"
+  port: 6379
+  password: "${REDIS_PASSWORD:}"
+  db: 0
+
+jwt:
+  secret: "${JWT_SECRET:your-secret-key-change-in-production}"
+  expiresIn: "15m"
+  refreshExpiresIn: "7d"
+
+rateLimit:
+  windowMs: 15 * 60 * 1000  # 15 minutes
+  max: 100  # limit each IP to 100 requests per windowMs
+
+logging:
+  level: "info"
+  format: "json"
+
+security:
+  cors:
+    origin: "*"
+    credentials: true
+  helmet: true
+
+# External Services
+external:
+  vehicles:
+    url: "${VEHICLES_SERVICE_URL:http://localhost:3001}"
+  documents:
+    url: "${DOCUMENTS_SERVICE_URL:http://localhost:3003}"
